@@ -725,6 +725,8 @@ set(gca,'Xtick',mu_s);
 %filename = 'data6';
 filename = 'data4';
 M_min = 100;
+
+
 mu_w = 1;
 sigma_w = 0.4; 
 lower_w = 0;
@@ -733,6 +735,7 @@ p_w = 0.8;
 
 mu_s = 0.5;
 sigma_s = 0.5;
+%sigma_s = 0.1;
 ind_sigma = 0.1;
 lower_s = 0;
 upper_s = inf;
@@ -749,6 +752,7 @@ r_g = 1;
 
 %{
 mu_w = 1:0.5:2.5;
+
 U_g_w_1 = zeros(length(mu_w),1);
 Ind_TotUti_w_1 = zeros(length(mu_w),1);
 Num_reporter_w_1 = zeros(length(mu_w),1);
@@ -775,7 +779,7 @@ Rep_AveUti_w_4 = zeros(length(mu_w),1);
 Sigma_g_w_4 = zeros(length(mu_w),1);
 %}
 
-sigma_s = 0:0.2:1;
+%sigma_s = 0:0.2:1;
 %{
 U_g_sigmas_1 = zeros(length(sigma_s),1);
 Ind_TotUti_sigmas_1 = zeros(length(sigma_s),1);
@@ -796,7 +800,7 @@ Ind_TotUti_sigmas_3 = zeros(length(sigma_s),1);
 Num_reporter_sigmas_3 = zeros(length(sigma_s),1);
 Rep_AveUti_sigmas_3 = zeros(length(sigma_s),1);
 Sigma_g_sigmas_3 = zeros(length(sigma_s),1);
-%}
+
 
 
 U_g_sigmas_4 = zeros(length(sigma_s),1);
@@ -804,19 +808,203 @@ Ind_TotUti_sigmas_4 = zeros(length(sigma_s),1);
 Num_reporter_sigmas_4 = zeros(length(sigma_s),1);
 Rep_AveUti_sigmas_4 = zeros(length(sigma_s),1);
 Sigma_g_sigmas_4 = zeros(length(sigma_s),1);
+%}
+%p_w = 0.5:0.1:0.9;
+
+%{
+U_g_pw_1 = zeros(length(p_w),1);
+Ind_TotUti_pw_1 = zeros(length(p_w),1);
+Num_reporter_pw_1 = zeros(length(p_w),1);
+Rep_AveUti_pw_1 = zeros(length(p_w),1);
+Sigma_g_pw_1 = zeros(length(p_w),1);
+
+
+U_g_pw_2 = zeros(length(p_w),1);
+Ind_TotUti_pw_2 = zeros(length(p_w),1);
+Num_reporter_pw_2 = zeros(length(p_w),1);
+Rep_AveUti_pw_2 = zeros(length(p_w),1);
+Sigma_g_pw_2 = zeros(length(p_w),1);
+%}
+
+
+%{
+mu_s = 0.3:0.2:0.9;
+U_g_s_1 = zeros(length(mu_s),1);
+Ind_TotUti_s_1 = zeros(length(mu_s),1);
+Num_reporter_s_1 = zeros(length(mu_s),1);
+Rep_AveUti_s_1 = zeros(length(mu_s),1);
+Sigma_g_s_1 = zeros(length(mu_s),1);
+
+
+U_g_s_2 = zeros(length(mu_s),1);
+Ind_TotUti_s_2 = zeros(length(mu_s),1);
+Num_reporter_s_2 = zeros(length(mu_s),1);
+Rep_AveUti_s_2 = zeros(length(mu_s),1);
+Sigma_g_s_2 = zeros(length(mu_s),1);
+
+U_g_s_3 = zeros(length(mu_s),1);
+Ind_TotUti_s_3 = zeros(length(mu_s),1);
+Num_reporter_s_3 = zeros(length(mu_s),1);
+Rep_AveUti_s_3 = zeros(length(mu_s),1);
+Sigma_g_s_3 = zeros(length(mu_s),1);
+%}
+%{
+p_w = 0.5:0.2:0.9;
+sigma_s = 0.3:0.2:0.9;
+Sigma_g_1 = zeros(length(p_w),length(sigma_s));
+%}
+
+mu_s = 0.3:0.2:0.9;
+mu_w = 1:0.5:2;
+
+Sigmag_s_w = zeros(length(mu_s),length(mu_w));
 
 iteration_times = 200;
-tic
 
-for j = 1:length(sigma_s)
+
+for j = 1:length(mu_s)
+    for i = 1:length(mu_w)
+    tic
+    [ ~,~,~,~,Sigmag_s_w(j,i) ] = DataCollection_FBData_Complete(filename,M_min,mu_w(i),sigma_w,lower_w,upper_w,p_w,mu_s(j),sigma_s,ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
+    %[ ~,~,~,~,Sigma_g_1(j,i) ] = DataCollection_FBData_Complete(filename,M_min,mu_w,sigma_w,lower_w,upper_w,p_w(j),mu_s,sigma_s(i),ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
     %[ U_g_w_1(j),Ind_TotUti_w_1(j),Num_reporter_w_1(j),Rep_AveUti_w_1(j),Sigma_g_w_1(j) ] = DataCollection_FBData_Complete(filename,M_min,mu_w(j),sigma_w,lower_w,upper_w,p_w,mu_s,sigma_s,ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
     %[ U_g_w_2(j),Ind_TotUti_w_2(j),Num_reporter_w_2(j),Rep_AveUti_w_2(j),Sigma_g_w_2(j) ] = DataCollection_FBData_ComS_ParW(filename,M_min,mu_w(j),sigma_w,lower_w,upper_w,p_w,mu_s,sigma_s,ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
     %[ U_g_sigmas_1(j),Ind_TotUti_sigmas_1(j),Num_reporter_sigmas_1(j),Rep_AveUti_sigmas_1(j),Sigma_g_sigmas_1(j) ] = DataCollection_FBData_Complete(filename,M_min,mu_w,sigma_w,lower_w,upper_w,p_w,mu_s,sigma_s(j),ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
     %[ U_g_sigmas_2(j),Ind_TotUti_sigmas_2(j),Num_reporter_sigmas_2(j),Rep_AveUti_sigmas_2(j),Sigma_g_sigmas_2(j) ] = DataCollection_FBData_NotSocial_ComW(filename,M_min,mu_w,sigma_w,lower_w,upper_w,p_w,mu_s,sigma_s(j),ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
     %[ U_g_sigmas_3(j),Ind_TotUti_sigmas_3(j),Num_reporter_sigmas_3(j),Rep_AveUti_sigmas_3(j),Sigma_g_sigmas_3(j) ] = DataCollection_FBData_ComS_ParW(filename,M_min,mu_w,sigma_w,lower_w,upper_w,p_w,mu_s,sigma_s(j),ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
-    [ U_g_sigmas_4(j),Ind_TotUti_sigmas_4(j),Num_reporter_sigmas_4(j),Rep_AveUti_sigmas_4(j),Sigma_g_sigmas_4(j) ] = DataCollection_FBData_ParS_ComW(filename,M_min,mu_w,sigma_w,lower_w,upper_w,p_w,mu_s,sigma_s(j),ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
+    %[ U_g_sigmas_4(j),Ind_TotUti_sigmas_4(j),Num_reporter_sigmas_4(j),Rep_AveUti_sigmas_4(j),Sigma_g_sigmas_4(j) ] = DataCollection_FBData_ParS_ComW(filename,M_min,mu_w,sigma_w,lower_w,upper_w,p_w,mu_s,sigma_s(j),ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
+    %[ U_g_pw_1(j),Ind_TotUti_pw_1(j),Num_reporter_pw_1(j),Rep_AveUti_pw_1(j),Sigma_g_pw_1(j) ] = DataCollection_FBData_Complete(filename,M_min,mu_w,sigma_w,lower_w,upper_w,p_w(j),mu_s,sigma_s,ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
+    %[ U_g_pw_2(j),Ind_TotUti_pw_2(j),Num_reporter_pw_2(j),Rep_AveUti_pw_2(j),Sigma_g_pw_2(j) ] = DataCollection_FBData_ComS_ParW(filename,M_min,mu_w,sigma_w,lower_w,upper_w,p_w(j),mu_s,sigma_s,ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
+    %[ U_g_s_1(j),Ind_TotUti_s_1(j),Num_reporter_s_1(j),Rep_AveUti_s_1(j),Sigma_g_s_1(j) ] = DataCollection_FBData_Complete(filename,M_min,mu_w,sigma_w,lower_w,upper_w,p_w,mu_s(j),sigma_s,ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
+    %[ U_g_s_2(j),Ind_TotUti_s_2(j),Num_reporter_s_2(j),Rep_AveUti_s_2(j),Sigma_g_s_2(j) ] = DataCollection_FBData_NotSocial_ComW(filename,M_min,mu_w,sigma_w,lower_w,upper_w,p_w,mu_s(j),sigma_s,ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
+    %[ U_g_s_3(j),Ind_TotUti_s_3(j),Num_reporter_s_3(j),Rep_AveUti_s_3(j),Sigma_g_s_3(j) ] = DataCollection_FBData_ParS_ComW(filename,M_min,mu_w,sigma_w,lower_w,upper_w,p_w,mu_s(j),sigma_s,ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
+    toc
+    end
 end
-toc
+figure(1)
+plot(mu_s,Sigmag_s_w(:,1),'-ro',mu_s,Sigmag_s_w(:,2),'-k^',mu_s,Sigmag_s_w(:,3),'-bs','LineWidth',2);
+
+%{
+p_w = 0.8;
+sigma_s = 0.5;
+sigma_w = 2.5; 
+
+mu_w = 1:0.5:2.5;
+
+U_g_w_11 = zeros(length(mu_w),1);
+Ind_TotUti_w_11 = zeros(length(mu_w),1);
+Num_reporter_w_11 = zeros(length(mu_w),1);
+Rep_AveUti_w_11 = zeros(length(mu_w),1);
+Sigma_g_w_11 = zeros(length(mu_w),1);
+
+U_g_w_22 = zeros(length(mu_w),1);
+Ind_TotUti_w_22 = zeros(length(mu_w),1);
+Num_reporter_w_22 = zeros(length(mu_w),1);
+Rep_AveUti_w_22 = zeros(length(mu_w),1);
+Sigma_g_w_22 = zeros(length(mu_w),1);
+
+for j = 1:length(mu_w)
+    [ U_g_w_11(j),Ind_TotUti_w_11(j),Num_reporter_w_11(j),Rep_AveUti_w_11(j),Sigma_g_w_11(j) ] = DataCollection_FBData_Complete(filename,M_min,mu_w(j),sigma_w,lower_w,upper_w,p_w,mu_s,sigma_s,ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
+    [ U_g_w_22(j),Ind_TotUti_w_22(j),Num_reporter_w_22(j),Rep_AveUti_w_22(j),Sigma_g_w_22(j) ] = DataCollection_FBData_ComS_ParW(filename,M_min,mu_w(j),sigma_w,lower_w,upper_w,p_w,mu_s,sigma_s,ind_sigma,lower_s,upper_s,selfS,p_s,R_d,r_d,R_g,r_a,r_g,iteration_times);
+end
+
+
+
+figure(2);
+plot(mu_w,U_g_w_11,'-ro',mu_w,U_g_w_22,'-k^','LineWidth',2);
+figure(3)
+hold on;
+plot(mu_w,Ind_TotUti_w_11,'-ro',mu_w,Ind_TotUti_w_22,'-k^','LineWidth',2);
+figure(4)
+plot(mu_w,Num_reporter_w_11,'-ro',mu_w,Num_reporter_w_22,'-k^','LineWidth',2);
+%}
+
+%{
+figure(1)
+plot(mu_s,U_g_s_1,'-ro','LineWidth',2);
+set(gca,'Xtick',mu_s);
+figure(2)
+plot(mu_s,Ind_TotUti_s_1,'-ro','LineWidth',2);
+set(gca,'Xtick',mu_s);
+figure(3)
+plot(mu_s,Num_reporter_s_1,'-ro','LineWidth',2);
+set(gca,'Xtick',mu_s);
+figure(4)
+plot(mu_s,Sigma_g_s_11,'-ro','LineWidth',2);
+set(gca,'Xtick',mu_s);
+%}
+
+%{
+figure(1)
+plot(mu_s,U_g_s_1,'-ro',mu_s,U_g_s_2,'-k^',mu_s,U_g_s_3,'-bs','LineWidth',2);
+set(gca,'Xtick',mu_s);
+figure(2)
+plot(mu_s,Ind_TotUti_s_1,'-ro',mu_s,Ind_TotUti_s_2,'-k^',mu_s,Ind_TotUti_s_3,'-bs','LineWidth',2);
+set(gca,'Xtick',mu_s);
+figure(3)
+plot(mu_s,Num_reporter_s_1,'-ro',mu_s,Num_reporter_s_2,'-k^',mu_s,Num_reporter_s_3,'-bs','LineWidth',2);
+set(gca,'Xtick',mu_s);
+figure(4)
+plot(mu_s,Sigma_g_s_1,'-ro',mu_s,Sigma_g_s_2,'-k^',mu_s,Sigma_g_s_3,'-bs','LineWidth',2);
+set(gca,'Xtick',mu_s);
+%}
+
+%{
+figure(1)
+plot(p_w,U_g_pw_1,'-ro',p_w,U_g_pw_2,'-k^','LineWidth',2);
+set(gca,'Xtick',p_w);
+set(gca,'FontSize',14);
+ylabel('Utility of the data collector','FontSize',20);
+xlabel('Probability of data correlation p_w','FontSize',20);
+figure(2)
+plot(p_w,Ind_TotUti_pw_1,'-ro',p_w,Ind_TotUti_pw_2,'-k^','LineWidth',2);
+set(gca,'Xtick',p_w);
+set(gca,'FontSize',14);
+ylabel('Total utility of individuals','FontSize',20);
+xlabel('Probability of data correlation p_w','FontSize',20);
+figure(3)
+plot(p_w,Num_reporter_pw_1,'-ro',p_w,Num_reporter_pw_2,'-k^','LineWidth',2);
+set(gca,'Xtick',p_w);
+set(gca,'FontSize',14);
+ylabel('Size of the reporter set','FontSize',20);
+xlabel('Probability of data correlation p_w','FontSize',20);
+figure(4)
+plot(p_w,Sigma_g_pw_1,'-ro',p_w,Sigma_g_pw_2,'-k^','LineWidth',2);
+set(gca,'Xtick',p_w);
+set(gca,'FontSize',14);
+ylabel('Variance of noise by the data collector','FontSize',20);
+xlabel('Probability of data correlation p_w','FontSize',20);
+
+figure(1)
+bar(p_w,[U_g_pw_1,U_g_pw_2])
+set(gca,'Xtick',p_w);
+axis([0.45 0.95 7 9])
+set(gca,'FontSize',14);
+ylabel('Utility of the data collector','FontSize',20);
+xlabel('Data correlation probability p_w','FontSize',20);
+legend('Scenario 1: complete S and W','Scenario 3: complete S; partial W');
+
+figure(2)
+bar(p_w,[Ind_TotUti_pw_1,Ind_TotUti_pw_2])
+axis([0.45 0.95 0 1100])
+set(gca,'Xtick',p_w);
+axis([0.45 0.95 740 880]);
+set(gca,'Ytick',740:20:880);
+set(gca,'FontSize',14);
+ylabel('Total utility of individuals','FontSize',20);
+xlabel('Probability of data correlation p_w','FontSize',20);
+legend('Scenario 1: complete S and W','Scenario 3: complete S; partial W');
+
+figure(3)
+bar(p_w,[Num_reporter_pw_1,Num_reporter_pw_2])
+axis([0.45 0.95 124 142])
+set(gca,'Ytick',124:3:142)
+set(gca,'FontSize',14);
+ylabel('Size of the reporter set','FontSize',20);
+xlabel('Data correlation probability p_w','FontSize',20);
+legend('Scenario 1: complete S and W','Scenario 3: complete S; partial W');
+%}
+%{
 figure(1)
 plot(sigma_s,U_g_sigmas_1,'-ro',sigma_s,U_g_sigmas_2,'-k^',sigma_s,U_g_sigmas_4,'-bs','LineWidth',2);
 figure(2)
@@ -824,6 +1012,7 @@ plot(sigma_s,Ind_TotUti_sigmas_1,'-ro',sigma_s,Ind_TotUti_sigmas_2,'-k^',sigma_s
 
 figure(3)
 plot(sigma_s,Num_reporter_sigmas_1,'-ro',sigma_s,Num_reporter_sigmas_2,'-k^',sigma_s,Num_reporter_sigmas_4,'-bs','LineWidth',2);
+%}
 %{
 figure(1);
 hold on;

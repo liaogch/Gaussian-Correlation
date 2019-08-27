@@ -4,8 +4,12 @@ function [ L , W ] = Gen_GauCorM_TruncNor( t,mu,sigma,lower,upper,p)
 % p ∑«¡„∏≈¬ 
 D  = zeros(t);
 W = zeros(t);
-nd=makedist('normal','mu',mu,'sigma',sigma);
-td=truncate(nd,lower,upper);
+if sigma ==0
+    td = makedist('Binomial','N',1,'p',1);
+else
+    nd=makedist('normal','mu',mu,'sigma',sigma);
+    td=truncate(nd,lower,upper);
+end
 %W = random(td,t,t);
 %W = zeros(T);
 for i = 1:t 

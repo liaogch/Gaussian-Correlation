@@ -9,3 +9,6 @@ path(path, [parent 'data']);
 path(path, [parent 'dataresult']);
 path(path, [parent 'figure\fig1']);
 path(path, [parent 'figure\fig2']);
+path(path, [parent 'Incomplete']);
+path(path, [parent 'Incomplete\fig']);
+path(path, [parent 'Incomplete\Examples']);
